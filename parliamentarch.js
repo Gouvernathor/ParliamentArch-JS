@@ -5,11 +5,11 @@
  * https://github.com/Gouvernathor/parliamentarch
  */
 
-import { sorted, sum } from "./parliamentarch/_util";
-import { get_seats_centers, get_row_thickness, get_nrows_from_nseats } from "./parliamentarch/geometry";
-import { dispatch_seats, get_grouped_svg } from "./parliamentarch/svg";
+import { sorted, sum } from "./parliamentarch/_util.js";
+import { get_seats_centers, get_row_thickness, get_nrows_from_nseats } from "./parliamentarch/geometry.js";
+import { dispatch_seats, get_grouped_svg } from "./parliamentarch/svg.js";
 
-export { SeatData } from "./parliamentarch/svg";
+export { SeatData } from "./parliamentarch/svg.js";
 
 /**
  * @param {Map<SeatData, Number>} attrib

@@ -1,5 +1,5 @@
 "use strict";
-import { sum } from "./parliamentarch/_util";
+import { sum } from "./parliamentarch/_util.js";
 
 export class SeatData {
     /**
