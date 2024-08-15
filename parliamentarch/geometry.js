@@ -5,19 +5,22 @@ import { sum, cached } from "parliamentarch/_util.js";
 const _DEFAULT_SPAN_ANGLE = 180;
 
 /**
- * @param {Number} nrows
- * @return {Number}
+ * @param {number} nrows
+ * @return {number}
  */
 export function get_row_thickness(nrows) {
     return (1.0 / (4 * nrows - 2));
 }
 
 /**
- * @param {Number} nrows
- * @param {Number} span_angle
- * @return {Array<Number>}
+ * @param {number} nrows
+ * @param {number} span_angle
+ * @return {number[]}
  */
-export function get_rows_from_nrows(nrows, span_angle = _DEFAULT_SPAN_ANGLE) {
+export function get_rows_from_nrows(nrows,
+    span_angle = _DEFAULT_SPAN_ANGLE,
+) {
+
     const rv = [];
 
     const rad = get_row_thickness(nrows);
@@ -34,11 +37,14 @@ export function get_rows_from_nrows(nrows, span_angle = _DEFAULT_SPAN_ANGLE) {
 const _cached_get_rows_from_nrows = cached(get_rows_from_nrows);
 
 /**
- * @param {Number} nseats
- * @param {Number} span_angle
- * @return {Number}
+ * @param {number} nseats
+ * @param {number} span_angle
+ * @return {number}
  */
-export function get_nrows_from_nseats(nseats, span_angle = _DEFAULT_SPAN_ANGLE) {
+export function get_nrows_from_nseats(nseats,
+    span_angle = _DEFAULT_SPAN_ANGLE,
+) {
+
     let i = 1;
     while (sum(_cached_get_rows_from_nrows(i, span_angle)) < nseats)
         i++;
@@ -55,13 +61,19 @@ export const fillingStrategy = {
 Object.freeze(fillingStrategy);
 
 /**
- * @param {Number} nseats
- * @param {Number} min_nrows
- * @param {String} filling_strategy
- * @param {Number} span_angle
- * @return {Map<Array<Number>, Number>}
+ * @param {number} nseats
+ * @param {number} min_nrows
+ * @param {string} filling_strategy
+ * @param {number} span_angle
+ * @return {Map<[number, number], number>}
  */
-export function get_seats_centers(nseats, min_nrows = 0, filling_strategy = fillingStrategy.DEFAULT, span_angle = _DEFAULT_SPAN_ANGLE) {
+export function get_seats_centers(
+    nseats,
+    min_nrows = 0,
+    filling_strategy = fillingStrategy.DEFAULT,
+    span_angle = _DEFAULT_SPAN_ANGLE,
+) {
+
     const nrows = Math.max(min_nrows, _cached_get_nrows_from_nseats(nseats, span_angle));
     const row_thicc = get_row_thickness(nrows);
     const span_angle_margin = (1 - span_angle / 180) * Math.PI / 2;

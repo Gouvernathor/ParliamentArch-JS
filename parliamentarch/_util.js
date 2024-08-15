@@ -1,11 +1,14 @@
 "use strict";
 
-// similar to the python sum builtin
+/**
+ * similar to the python sum builtin
+ * @param {Iterable<number>} ar
+ * @param {number} start
+ * @return {number}
+ */
 export function sum(ar, start = 0) {
-    if (!Array.isArray(ar)) {
-        ar = [...ar];
-    }
-    return ar.reduce((a, b) => a + b, start);
+    return (Array.isArray(ar) ? ar : [...ar])
+        .reduce((a, b) => a + b, start);
 }
 
 // similar to functools.cache in python
@@ -20,7 +23,13 @@ export function cached(f) {
     }
 }
 
-// similar to the python sorted builtin
+/**
+ * similar to the python sorted builtin
+ * @param {Iterable<T>} array
+ * @param {Function} key
+ * @param {boolean} reverse
+ * @return {T[]}
+ */
 export function sorted(array, key = null, reverse = false) {
     return [...array].sort((a, b) => {
         if (key) {

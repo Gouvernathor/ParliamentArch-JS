@@ -4,10 +4,10 @@ import { sum } from "parliamentarch/_util.js";
 
 export class SeatData {
     /**
-     * @param {String} data
-     * @param {String} color
-     * @param {Number} border_size
-     * @param {String} border_color
+     * @param {string} data
+     * @param {string} color
+     * @param {number} border_size
+     * @param {string} border_color
      */
     constructor(data, color, border_size = 0, border_color = "#000") {
         this.id = null;
@@ -23,7 +23,7 @@ export class SeatData {
 }
 
 /**
- * @param {Map<SeatData, Number>} group_seats
+ * @param {Map<SeatData, number>} group_seats
  * @param {Iterable<S>} seats
  * @return {Map<SeatData, S[]>}
  */
@@ -84,7 +84,7 @@ export function get_grouped_svg(
     write_number_of_seats = true,
     font_size_factor = 36 / 175) {
 
-    if (typeof margins === "number") {
+    if (!Array.isArray(margins)) {
         margins = [margins, margins, margins, margins];
     } else if (margins.length === 2) {
         margins = [margins[0], margins[1], margins[0], margins[1]];
@@ -115,8 +115,8 @@ export function get_grouped_svg(
 
 /**
  * @param {Element} svg
- * @param {Number} width
- * @param {Number} height
+ * @param {number} width
+ * @param {number} height
  */
 function populate_header(svg, width, height) {
     svg.setAttribute("version", "1.1");
@@ -126,10 +126,10 @@ function populate_header(svg, width, height) {
 
 /**
  * @param {Element} svg
- * @param {Number} nseats
- * @param {Number} x
- * @param {Number} y
- * @param {Number} font_size
+ * @param {number} nseats
+ * @param {number} x
+ * @param {number} y
+ * @param {number} font_size
  */
 function add_number_of_seats(svg, nseats, x, y, font_size) {
     const text = svg.appendChild(document.createElementNS(SVG_NAMESPACE, "text"));
@@ -141,18 +141,19 @@ function add_number_of_seats(svg, nseats, x, y, font_size) {
 
 /**
  * @param {Element} svg
- * @param {Map<SeatData, Array<Array<Number>>>} seat_centers_by_group
- * @param {Number} seat_actual_radius
- * @param {Number} canvas_size
- * @param {Number} left_margin
- * @param {Number} top_margin
+ * @param {Map<SeatData, [number, number][]>} seat_centers_by_group
+ * @param {number} seat_actual_radius
+ * @param {number} canvas_size
+ * @param {number} left_margin
+ * @param {number} top_margin
  */
 function add_grouped_seats(svg,
     seat_centers_by_group,
     seat_actual_radius,
     canvas_size,
     left_margin,
-    top_margin) {
+    top_margin,
+) {
 
     let group_number_fallback = 0;
 

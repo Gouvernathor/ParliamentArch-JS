@@ -7,20 +7,26 @@
 
 import { sorted, sum } from "parliamentarch/_util.js";
 import { get_seats_centers, get_row_thickness, get_nrows_from_nseats } from "parliamentarch/geometry.js";
-import { dispatch_seats, get_grouped_svg } from "parliamentarch/svg.js";
+import { dispatch_seats, get_grouped_svg, SeatData } from "parliamentarch/svg.js";
 
 // export * as geometry from "parliamentarch/geometry.js";
 // export * as svg from "parliamentarch/svg.js";
 export { SeatData } from "parliamentarch/svg.js";
 
 /**
- * @param {Map<SeatData, Number>} attrib
- * @param {Number} seat_radius_factor
+ * @param {Map<SeatData, number>} attrib
+ * @param {number} seat_radius_factor
  * @param {Array} get_seats_centers_args
  * @param {Array} get_grouped_svg_args
  * @return {Element}
  */
-export function get_svg_from_attribution(attrib, seat_radius_factor = .8, get_seats_centers_args = [], get_grouped_svg_args = []) {
+export function get_svg_from_attribution(
+    attrib,
+    seat_radius_factor = .8,
+    get_seats_centers_args = [],
+    get_grouped_svg_args = [],
+) {
+
     const nseats = sum(attrib.values());
 
     const results = get_seats_centers(nseats, ...get_seats_centers_args);
