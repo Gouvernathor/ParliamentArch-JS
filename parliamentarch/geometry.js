@@ -133,13 +133,12 @@ export function get_seats_centers(
 
         const row_arc_radius = .5 + 2 * r * row_thicc;
 
-        const angle_margin = Math.asin(row_thicc / row_arc_radius) + span_angle_margin;
-
-        const angle_increment = (Math.PI - 2 * angle_margin) / (nseats_this_row - 1);
-
         if (nseats_this_row === 1) {
             positions.set([1., row_arc_radius], Math.PI / 2);
         } else {
+            const angle_margin = Math.asin(row_thicc / row_arc_radius) + span_angle_margin;
+            const angle_increment = (Math.PI - 2 * angle_margin) / (nseats_this_row - 1);
+
             for (let s = 0; s < nseats_this_row; s++) {
                 const angle = angle_margin + s * angle_increment;
                 positions.set([row_arc_radius * Math.cos(angle) + 1., row_arc_radius * Math.sin(angle)], angle);
