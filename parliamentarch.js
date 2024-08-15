@@ -18,7 +18,7 @@ export { SeatData } from "./parliamentarch/svg";
  * @param {Array} get_grouped_svg_args
  * @return {Element}
  */
-export function get_svg_from_attribution(attrib, seat_radius_factor=.8, get_seats_centers_args=[], get_grouped_svg_args=[]) {
+export function get_svg_from_attribution(attrib, seat_radius_factor = .8, get_seats_centers_args = [], get_grouped_svg_args = []) {
     const nseats = sum(attrib.values());
 
     const results = get_seats_centers(nseats, ...get_seats_centers_args);

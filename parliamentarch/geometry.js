@@ -9,7 +9,7 @@ const _DEFAULT_SPAN_ANGLE = 180;
  * @return {Number}
  */
 export function get_row_thickness(nrows) {
-    return (1.0 / (4*nrows - 2));
+    return (1.0 / (4 * nrows - 2));
 }
 
 /**
@@ -17,7 +17,7 @@ export function get_row_thickness(nrows) {
  * @param {Number} span_angle
  * @return {Array<Number>}
  */
-export function get_rows_from_nrows(nrows, span_angle=_DEFAULT_SPAN_ANGLE) {
+export function get_rows_from_nrows(nrows, span_angle = _DEFAULT_SPAN_ANGLE) {
     const rv = [];
 
     const rad = get_row_thickness(nrows);
@@ -38,7 +38,7 @@ const _cached_get_rows_from_nrows = cached(get_rows_from_nrows);
  * @param {Number} span_angle
  * @return {Number}
  */
-export function get_nrows_from_nseats(nseats, span_angle=_DEFAULT_SPAN_ANGLE) {
+export function get_nrows_from_nseats(nseats, span_angle = _DEFAULT_SPAN_ANGLE) {
     let i = 1;
     while (sum(_cached_get_rows_from_nrows(i, span_angle)) < nseats)
         i++;
@@ -61,7 +61,7 @@ Object.freeze(fillingStrategy);
  * @param {Number} span_angle
  * @return {Map<Array<Number>, Number>}
  */
-export function get_seats_centers(nseats, min_nrows=0, filling_strategy=fillingStrategy.DEFAULT, span_angle=_DEFAULT_SPAN_ANGLE) {
+export function get_seats_centers(nseats, min_nrows = 0, filling_strategy = fillingStrategy.DEFAULT, span_angle = _DEFAULT_SPAN_ANGLE) {
     const nrows = Math.max(min_nrows, _cached_get_nrows_from_nseats(nseats, span_angle));
     const row_thicc = get_row_thickness(nrows);
     const span_angle_margin = (1 - span_angle / 180) * Math.PI / 2;
@@ -104,7 +104,7 @@ export function get_seats_centers(nseats, min_nrows=0, filling_strategy=fillingS
     const positions = new Map();
     for (let r = starting_row; r < nrows; r++) {
         let nseats_this_row;
-        if (r === nrows-1) {
+        if (r === nrows - 1) {
             nseats_this_row = nseats - positions.size;
         } else if (filling_strategy === fillingStrategy.OUTER_PRIORITY) {
             if (r === starting_row) {
