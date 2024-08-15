@@ -2,6 +2,9 @@
 
 // similar to the python sum builtin
 export function sum(ar, start = 0) {
+    if (!Array.isArray(ar)) {
+        ar = [...ar];
+    }
     return ar.reduce((a, b) => a + b, start);
 }
 
