@@ -62,17 +62,19 @@ Object.freeze(fillingStrategy);
 
 /**
  * @param {number} nseats
- * @param {number} min_nrows
- * @param {string} filling_strategy
- * @param {number} span_angle
+ * @param {Object} options
+ * @param {number} [options.min_nrows]
+ * @param {string} [options.filling_strategy]
+ * @param {number} [options.span_angle]
  * @return {Map<[number, number], number>}
  */
 export function get_seats_centers(
     nseats,
-    min_nrows = 0,
-    filling_strategy = fillingStrategy.DEFAULT,
-    span_angle = _DEFAULT_SPAN_ANGLE,
-) {
+    {
+        min_nrows = 0,
+        filling_strategy = fillingStrategy.DEFAULT,
+        span_angle = _DEFAULT_SPAN_ANGLE,
+    } = {}) {
 
     const nrows = Math.max(min_nrows, _cached_get_nrows_from_nseats(nseats, span_angle));
     const row_thicc = get_row_thickness(nrows);

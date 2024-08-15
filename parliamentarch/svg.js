@@ -68,21 +68,24 @@ export function get_svg(seat_centers, ...args) {
 const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
 
 /**
- * @param {Map<SeatData, Array<Array<Number>>>} seat_centers_by_group
- * @param {Number} seat_actual_radius
- * @param {Number} canvas_size
- * @param {Number|Array<Number>} margins
- * @param {Boolean} write_number_of_seats
- * @param {Number} font_size_factor
+ * @param {Map<SeatData, [number, number][]>} seat_centers_by_group
+ * @param {number} seat_actual_radius
+ * @param {Object} options
+ * @param {number} [options.canvas_size]
+ * @param {number|number[]} [options.margins]
+ * @param {boolean} [options.write_number_of_seats]
+ * @param {number} [options.font_size_factor]
  * @return {Element}
  */
 export function get_grouped_svg(
     seat_centers_by_group,
     seat_actual_radius,
-    canvas_size = 175,
-    margins = 5.,
-    write_number_of_seats = true,
-    font_size_factor = 36 / 175) {
+    {
+        canvas_size = 175,
+        margins = 5.,
+        write_number_of_seats = true,
+        font_size_factor = 36 / 175,
+    } = {}) {
 
     if (!Array.isArray(margins)) {
         margins = [margins, margins, margins, margins];
