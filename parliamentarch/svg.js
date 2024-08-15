@@ -70,7 +70,7 @@ const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
  * @param {number} seat_actual_radius
  * @param {Object} options
  * @param {number} [options.canvas_size]
- * @param {number|number[]} [options.margins]
+ * @param {number|[number, number]|[number, number, number, number]} [options.margins]
  * @param {boolean} [options.write_number_of_seats]
  * @param {number} [options.font_size_factor]
  * @return {Element}
@@ -104,12 +104,8 @@ export function get_grouped_svg(
             top_margin + (canvas_size * 170 / 175),
             Math.round(font_size_factor * canvas_size));
     }
-    add_grouped_seats(svg,
-        seat_centers_by_group,
-        seat_actual_radius,
-        canvas_size,
-        left_margin,
-        top_margin);
+    add_grouped_seats(svg, seat_centers_by_group, seat_actual_radius,
+        canvas_size, left_margin, top_margin);
 
     return svg
 }
