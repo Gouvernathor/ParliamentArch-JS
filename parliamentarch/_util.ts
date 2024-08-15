@@ -1,11 +1,9 @@
 "use strict";
 
 // similar to the python sum builtin
-export function sum(ar, start = 0) {
-    if (!Array.isArray(ar)) {
-        ar = [...ar];
-    }
-    return ar.reduce((a, b) => a + b, start);
+export function sum(ar: Iterable<number>, start = 0): number {
+    return (Array.isArray(ar) ? ar : [...ar])
+        .reduce((a, b) => a + b, start);
 }
 
 // similar to functools.cache in python
@@ -21,7 +19,7 @@ export function cached(f) {
 }
 
 // similar to the python sorted builtin
-export function sorted(array, key = null, reverse = false) {
+export function sorted<T>(array: Iterable<T>, key = null, reverse = false): T[] {
     return [...array].sort((a, b) => {
         if (key) {
             a = key(a);

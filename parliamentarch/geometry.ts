@@ -1,24 +1,18 @@
 "use strict";
 
-import { sum, cached } from "parliamentarch/_util.js";
+import { sum, cached } from "parliamentarch/_util";
 
 const _DEFAULT_SPAN_ANGLE = 180;
 
-/**
- * @param {Number} nrows
- * @return {Number}
- */
-export function get_row_thickness(nrows) {
+export function get_row_thickness(nrows: number): number {
     return (1.0 / (4 * nrows - 2));
 }
 
-/**
- * @param {Number} nrows
- * @param {Number} span_angle
- * @return {Array<Number>}
- */
-export function get_rows_from_nrows(nrows, span_angle = _DEFAULT_SPAN_ANGLE) {
-    const rv = [];
+export function get_rows_from_nrows(nrows: number,
+    span_angle: number = _DEFAULT_SPAN_ANGLE,
+): number[] {
+
+    const rv: number[] = [];
 
     const rad = get_row_thickness(nrows);
 
@@ -33,12 +27,10 @@ export function get_rows_from_nrows(nrows, span_angle = _DEFAULT_SPAN_ANGLE) {
 
 const _cached_get_rows_from_nrows = cached(get_rows_from_nrows);
 
-/**
- * @param {Number} nseats
- * @param {Number} span_angle
- * @return {Number}
- */
-export function get_nrows_from_nseats(nseats, span_angle = _DEFAULT_SPAN_ANGLE) {
+export function get_nrows_from_nseats(nseats: number,
+    span_angle: number = _DEFAULT_SPAN_ANGLE,
+): number {
+
     let i = 1;
     while (sum(_cached_get_rows_from_nrows(i, span_angle)) < nseats)
         i++;
@@ -54,21 +46,20 @@ export const fillingStrategy = {
 }
 Object.freeze(fillingStrategy);
 
-/**
- * @param {Number} nseats
- * @param {Number} min_nrows
- * @param {String} filling_strategy
- * @param {Number} span_angle
- * @return {Map<Array<Number>, Number>}
- */
-export function get_seats_centers(nseats, min_nrows = 0, filling_strategy = fillingStrategy.DEFAULT, span_angle = _DEFAULT_SPAN_ANGLE) {
+export function get_seats_centers(
+    nseats: number,
+    min_nrows: number = 0,
+    filling_strategy: string = fillingStrategy.DEFAULT,
+    span_angle: number = _DEFAULT_SPAN_ANGLE,
+): Map<[number, number], number> {
+
     const nrows = Math.max(min_nrows, _cached_get_nrows_from_nseats(nseats, span_angle));
     const row_thicc = get_row_thickness(nrows);
     const span_angle_margin = (1 - span_angle / 180) * Math.PI / 2;
 
     const maxed_rows = _cached_get_rows_from_nrows(nrows, span_angle);
 
-    let starting_row, filling_ratio, seats_on_starting_row;
+    let starting_row: number, filling_ratio, seats_on_starting_row;
     switch (filling_strategy) {
         case fillingStrategy.DEFAULT:
             starting_row = 0;
@@ -102,8 +93,8 @@ export function get_seats_centers(nseats, min_nrows = 0, filling_strategy = fill
     }
 
     const positions = new Map();
-    for (let r = starting_row; r < nrows; r++) {
-        let nseats_this_row;
+    for (let r: number = starting_row; r < nrows; r++) {
+        let nseats_this_row: number;
         if (r === nrows - 1) {
             nseats_this_row = nseats - positions.size;
         } else if (filling_strategy === fillingStrategy.OUTER_PRIORITY) {

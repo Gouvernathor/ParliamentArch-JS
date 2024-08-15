@@ -1,15 +1,15 @@
 "use strict";
 
-import { sum } from "parliamentarch/_util.js";
+import { sum } from "parliamentarch/_util";
 
 export class SeatData {
-    /**
-     * @param {String} data
-     * @param {String} color
-     * @param {Number} border_size
-     * @param {String} border_color
-     */
-    constructor(data, color, border_size = 0, border_color = "#000") {
+    id: number|null;
+    data: string;
+    color: string;
+    border_size: number;
+    border_color: string;
+
+    constructor(data: string, color: string, border_size: number = 0, border_color: string = "#000") {
         this.id = null;
         this.data = data;
         this.color = color;
@@ -22,16 +22,12 @@ export class SeatData {
     }
 }
 
-/**
- * @param {Map<SeatData, Number>} group_seats
- * @param {Iterable<S>} seats
- * @return {Map<SeatData, S[]>}
- */
-export function dispatch_seats(group_seats, seats) {
+type S = [number, number];
+export function dispatch_seats(group_seats: Map<SeatData, number>, seats: Iterable<S>): Map<SeatData, S[]> {
     const seatIterator = seats[Symbol.iterator]();
     const rv = new Map();
     for (const [group, nseats] of group_seats.entries()) {
-        const group_seats = [];
+        const group_seats: S[] = [];
         for (let i = 0; i < nseats; i++) {
             const seat = seatIterator.next();
             if (seat.done) {
@@ -47,44 +43,25 @@ export function dispatch_seats(group_seats, seats) {
     return rv;
 }
 
-/**
- * @param {Map<Array<Number>, SeatData>} seat_centers
- * @param  {...any} args
- * @return {Element}
- */
-export function get_svg(seat_centers, ...args) {
-    const seat_centers_by_group = new Map();
-    for (const [group, centers] of seat_centers.entries()) {
-        for (const center of centers) {
-            if (!seat_centers_by_group.has(center)) {
-                seat_centers_by_group.set(center, []);
-            }
-            seat_centers_by_group.get(center).push(group);
-        }
-    }
-    return get_grouped_svg(seat_centers_by_group, ...args);
-}
-
 const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
 
-/**
- * @param {Map<SeatData, Array<Array<Number>>>} seat_centers_by_group
- * @param {Number} seat_actual_radius
- * @param {Number} canvas_size
- * @param {Number|Array<Number>} margins
- * @param {Boolean} write_number_of_seats
- * @param {Number} font_size_factor
- * @return {Element}
- */
+type get_grouped_svg_options = {
+    canvas_size?: number,
+    margins?: number|number[],
+    write_number_of_seats?: boolean,
+    font_size_factor?: number
+}
 export function get_grouped_svg(
-    seat_centers_by_group,
-    seat_actual_radius,
-    canvas_size = 175,
-    margins = 5.,
-    write_number_of_seats = true,
-    font_size_factor = 36 / 175) {
+    seat_centers_by_group: Map<SeatData, [number, number][]>,
+    seat_actual_radius: number,
+    {
+        canvas_size = 175,
+        margins = 5.,
+        write_number_of_seats = true,
+        font_size_factor = 36 / 175
+    }: get_grouped_svg_options = {}): Element {
 
-    if (typeof margins === "number") {
+    if (!Array.isArray(margins)) {
         margins = [margins, margins, margins, margins];
     } else if (margins.length === 2) {
         margins = [margins[0], margins[1], margins[0], margins[1]];
@@ -113,46 +90,26 @@ export function get_grouped_svg(
     return svg
 }
 
-/**
- * @param {Element} svg
- * @param {Number} width
- * @param {Number} height
- */
-function populate_header(svg, width, height) {
+function populate_header(svg: Element, width: number, height: number) {
     svg.setAttribute("version", "1.1");
-    svg.setAttribute("width", width);
-    svg.setAttribute("height", height);
+    svg.setAttribute("width", width.toString());
+    svg.setAttribute("height", height.toString());
 }
 
-/**
- * @param {Element} svg
- * @param {Number} nseats
- * @param {Number} x
- * @param {Number} y
- * @param {Number} font_size
- */
-function add_number_of_seats(svg, nseats, x, y, font_size) {
+function add_number_of_seats(svg: Element, nseats: number, x: number, y: number, font_size: number) {
     const text = svg.appendChild(document.createElementNS(SVG_NAMESPACE, "text"));
-    text.setAttribute("x", x);
-    text.setAttribute("y", y);
+    text.setAttribute("x", x.toString());
+    text.setAttribute("y", y.toString());
     text.setAttribute("style", `font-size: ${font_size}px; font-weight: bold; text-align: center; text-anchor: middle; font-family: sans-serif;`);
     text.textContent = nseats.toString();
 }
 
-/**
- * @param {Element} svg
- * @param {Map<SeatData, Array<Array<Number>>>} seat_centers_by_group
- * @param {Number} seat_actual_radius
- * @param {Number} canvas_size
- * @param {Number} left_margin
- * @param {Number} top_margin
- */
-function add_grouped_seats(svg,
-    seat_centers_by_group,
-    seat_actual_radius,
-    canvas_size,
-    left_margin,
-    top_margin) {
+function add_grouped_seats(svg: Element,
+    seat_centers_by_group: Map<SeatData, [number, number][]>,
+    seat_actual_radius: number,
+    canvas_size: number,
+    left_margin: number,
+    top_margin: number) {
 
     let group_number_fallback = 0;
 
@@ -181,9 +138,9 @@ function add_grouped_seats(svg,
 
         for (const [x, y] of seat_centers) {
             const circle = group_g.appendChild(document.createElementNS(SVG_NAMESPACE, "circle"));
-            circle.setAttribute("cx", left_margin + canvas_size * x);
-            circle.setAttribute("cy", top_margin + canvas_size * (1 - y));
-            circle.setAttribute("r", seat_actual_radius * canvas_size - group_border_width / 2);
+            circle.setAttribute("cx", (left_margin + canvas_size * x).toString());
+            circle.setAttribute("cy", (top_margin + canvas_size * (1 - y)).toString());
+            circle.setAttribute("r", (seat_actual_radius * canvas_size - group_border_width / 2).toString());
         }
     }
 }
