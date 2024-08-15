@@ -38,6 +38,7 @@ export const fillingStrategy = {
     EMPTY_INNER: "empty_inner",
     OUTER_PRIORITY: "outer_priority",
 }
+Object.freeze(fillingStrategy);
 
 export function get_seats_centers(nseats, min_nrows=0, filling_strategy=fillingStrategy.DEFAULT, span_angle=_DEFAULT_SPAN_ANGLE) {
     const nrows = Math.max(min_nrows, _cached_get_nrows_from_nseats(nseats, span_angle));
