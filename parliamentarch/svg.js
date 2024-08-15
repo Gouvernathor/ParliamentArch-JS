@@ -163,22 +163,17 @@ function add_grouped_seats(svg,
             group_number_fallback++;
         }
 
-        const block_id = `${group_number}-${group.sanitized_data}`;
-
         const group_border_width = group.border_size * seat_actual_radius * canvas_size;
-
-        const group_color = group.color;
-        const group_border_color = group.border_color;
 
         const group_g = svg.appendChild(document.createElementNS(SVG_NAMESPACE, "g"));
 
-        let g_style = `fill: ${group_color};`;
+        let g_style = `fill: ${group.color};`;
         if (group_border_width > 0) {
-            g_style += `stroke-width: ${group_border_width}; stroke: ${group_border_color};`;
+            g_style += `stroke-width: ${group_border_width}; stroke: ${group.border_color};`;
         }
         group_g.setAttribute("style", g_style);
 
-        group_g.setAttribute("id", block_id);
+        group_g.setAttribute("id", `${group_number}-${group.sanitized_data}`);
 
         if (group.data && group.data !== "") {
             group_g.appendChild(document.createElementNS(SVG_NAMESPACE, "title")).textContent = group.data;
