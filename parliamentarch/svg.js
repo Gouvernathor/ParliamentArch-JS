@@ -1,12 +1,13 @@
 "use strict";
+
 import { sum } from "parliamentarch/_util.js";
 
 export class SeatData {
     /**
      * @param {String} data
-     * @param {Color} color
+     * @param {String} color
      * @param {Number} border_size
-     * @param {Color} border_color
+     * @param {String} border_color
      */
     constructor(data, color, border_size = 0, border_color = "#000") {
         this.id = null;
