@@ -9,6 +9,8 @@ import { sorted, sum } from "parliamentarch/_util.js";
 import { get_seats_centers, get_row_thickness, get_nrows_from_nseats } from "parliamentarch/geometry.js";
 import { dispatch_seats, get_grouped_svg } from "parliamentarch/svg.js";
 
+// export * as geometry from "parliamentarch/geometry.js";
+// export * as svg from "parliamentarch/svg.js";
 export { SeatData } from "parliamentarch/svg.js";
 
 /**
