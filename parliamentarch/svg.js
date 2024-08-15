@@ -93,22 +93,21 @@ export function get_grouped_svg(
     const svg = document.createElementNS(SVG_NAMESPACE, "svg");
 
     populate_header(svg,
-        width = left_margin + 2 * canvas_size + right_margin,
-        height = top_margin + canvas_size + bottom_margin);
+        left_margin + 2 * canvas_size + right_margin,
+        top_margin + canvas_size + bottom_margin);
     if (write_number_of_seats) {
-        font_size = Math.round(font_size_factor * canvas_size);
         add_number_of_seats(svg,
             sum(Array.from(seat_centers_by_group.values(), group => group.length)),
-            x = left_margin + canvas_size,
-            y = top_margin + (canvas_size * 170 / 175),
-            font_size = font_size);
+            left_margin + canvas_size,
+            top_margin + (canvas_size * 170 / 175),
+            Math.round(font_size_factor * canvas_size));
     }
     add_grouped_seats(svg,
         seat_centers_by_group,
         seat_actual_radius,
-        canvas_size = canvas_size,
-        left_margin = left_margin,
-        top_margin = top_margin);
+        canvas_size,
+        left_margin,
+        top_margin);
 
     return svg
 }
