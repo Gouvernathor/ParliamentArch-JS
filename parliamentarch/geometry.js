@@ -1,22 +1,6 @@
 "use strict";
 
-// Python builtins
-
-function sum(ar, zero = 0) {
-    return ar.reduce((a, b) => a + b, zero);
-}
-
-function cached(f) {
-    const cache = new Map();
-    return function (...args) {
-        const key = JSON.stringify(args);
-        if (!cache.has(key)) {
-            cache.set(key, f(...args));
-        }
-        return cache.get(key);
-    }
-}
-
+import { sum, cached } from "parliamentarch/_util.js";
 
 const _DEFAULT_SPAN_ANGLE = 180;
 
