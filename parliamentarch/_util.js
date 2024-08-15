@@ -16,3 +16,23 @@ export function cached(f) {
         return cache.get(key);
     }
 }
+
+// similar to the python sorted builtin
+export function sorted(array, key = null, reverse = false) {
+    return [...array].sort((a, b) => {
+        if (key) {
+            a = key(a);
+            b = key(b);
+        }
+        let rv = 0;
+        if (a < b) {
+            rv = -1;
+        } else if (a > b) {
+            rv = 1;
+        }
+        if (reverse) {
+            rv *= -1;
+        }
+        return rv;
+    });
+}
