@@ -48,19 +48,17 @@ export function dispatch_seats(group_seats, seats) {
 }
 
 /**
- * @param {Map<Array<Number>, SeatData>} seat_centers
+ * @param {Map<[number, number], SeatData>} seat_centers
  * @param  {...any} args
  * @return {Element}
  */
 export function get_svg(seat_centers, ...args) {
     const seat_centers_by_group = new Map();
-    for (const [group, centers] of seat_centers.entries()) {
-        for (const center of centers) {
-            if (!seat_centers_by_group.has(center)) {
-                seat_centers_by_group.set(center, []);
-            }
-            seat_centers_by_group.get(center).push(group);
+    for (const [seat, group] of seat_centers.entries()) {
+        if (!seat_centers_by_group.has(group)) {
+            seat_centers_by_group.set(group, []);
         }
+        seat_centers_by_group.get(group).push(seat);
     }
     return get_grouped_svg(seat_centers_by_group, ...args);
 }
