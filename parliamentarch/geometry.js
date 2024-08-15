@@ -1,6 +1,6 @@
 "use strict";
 
-import { sum, cached } from "parliamentarch/_util.js";
+import { sum, cached } from "./parliamentarch/_util";
 
 const _DEFAULT_SPAN_ANGLE = 180;
 
