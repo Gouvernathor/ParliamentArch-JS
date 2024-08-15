@@ -5,6 +5,7 @@ export function sum(ar, start = 0) {
     return ar.reduce((a, b) => a + b, start);
 }
 
+// similar to functools.cache in python
 export function cached(f) {
     const cache = new Map();
     return function (...args) {
