@@ -116,6 +116,7 @@ export function get_grouped_svg(
  * @param {number} height
  */
 function populate_header(svg, width, height) {
+    svg.setAttribute("xmlns", SVG_NAMESPACE);
     svg.setAttribute("version", "1.1");
     svg.setAttribute("width", width);
     svg.setAttribute("height", height);
@@ -167,7 +168,7 @@ function add_grouped_seats(svg,
 
         let g_style = `fill: ${group.color};`;
         if (group_border_width > 0) {
-            g_style += `stroke-width: ${group_border_width}; stroke: ${group.border_color};`;
+            g_style += ` stroke-width: ${group_border_width}; stroke: ${group.border_color};`;
         }
         group_g.setAttribute("style", g_style);
 
